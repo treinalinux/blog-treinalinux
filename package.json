@@ -12,6 +12,7 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "git-commit-msg-linter": "^3.2.6",
     "webpack-dev-server": "^3.11.2"
   }
 }
