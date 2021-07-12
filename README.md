@@ -38,3 +38,8 @@ rails routes
 ```
 
 
+## Scaffold Author
+
+```
+rails generate scaffold Author first_name:string last_name:string description:string
+```
