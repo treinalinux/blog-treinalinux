@@ -43,3 +43,11 @@ rails routes
 ```
 rails generate scaffold Author first_name:string last_name:string description:string
 ```
+
+
+## Creating model Address
+
+```
+rails generate model Address country:string state:string city:string district:string street:string number:string complement:string
+```
+
