@@ -24,3 +24,17 @@ npm install -D git-commit-msg-linter
 ```
 rails generate controller Site index
 ```
+
+## Routes
+
+List routes
+
+```
+# In web browser
+http://localhost:3000/rails/info/routes
+
+# In terminal
+rails routes 
+```
+
+
