@@ -49,5 +49,8 @@ rails generate scaffold Author first_name:string last_name:string description:st
 
 ```
 rails generate model Address country:string state:string city:string district:string street:string number:string complement:string
+
+# rails db:migrate
+rails db:migrate
 ```
 
