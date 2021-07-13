@@ -1,5 +1,9 @@
 # Blog Treina Linux
 
+Estou criando o projeto **Blog Treina Linux** com Ruby On Rails, isso é inicialmente um teste.
+
+Pode se tornar um projeto oficial no futuro, no momento apenas realizando uma documentação de um projeto básico em Ruby on Rails.
+
 ## Creating the project
 
 ```
