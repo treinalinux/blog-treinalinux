@@ -81,3 +81,53 @@ class Author < ApplicationRecord
   end
 end
 ```
+
+# Crud operations on rails console
+
+```ruby
+❯ rails console
+
+# Create
+irb(main):001:0> Author.create(first_name: 'Linus', last_name: 'Torvalds')
+
+
+## Instance and only writes to the database
+irb(main):002:0> author = Author.new
+irb(main):003:0> author.first_name = 'Steve'
+irb(main):004:0> author.last_name = 'Jobs'
+irb(main):005:0> author.save
+
+
+# Read
+## Database query
+irb(main):011:0> Author.all
+irb(main):012:0> Author.all.length
+irb(main):013:0> Author.all.count
+irb(main):014:0> author = Author.find_by(first_name: 'Linus')
+irb(main):015:0> author = Author.find_by(first_name: 'Linus', last_name: "Torvalds")
+
+irb(main):016:0> authors = Author.where(last_name: 'Alves')
+irb(main):017:0> authors = Author.where(last_name: 'Alves').count
+irb(main):018:0> authors = Author.where(last_name: 'Alves')
+irb(main):019:0> authors[0]
+irb(main):020:0> authors[2]
+irb(main):021:0> authors[3]
+
+# Update
+irb(main):022:0> silva = Author.find_by(first_name: "Alan", last_name: "Alves")
+irb(main):023:0> silva.last_name = 'da Silva Alves'
+irb(main):024:0> silva
+irb(main):025:0> silva.save
+
+irb(main):026:0> silva.update(last_name: 'Alves')
+
+
+# Delete
+
+irb(main):027:0> silva.destroy 
+irb(main):028:0> Author.destroy_by(last_name: 'Alves')
+irb(main):029:0> Author.destroy_all
+
+```
+
+
