@@ -66,7 +66,7 @@ end
 
 ## Callback of Model
 
-```
+```ruby
 class Author < ApplicationRecord
   validates :first_name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :description, allow_nil: true, length: { maximum: 500 }
@@ -129,5 +129,4 @@ irb(main):028:0> Author.destroy_by(last_name: 'Alves')
 irb(main):029:0> Author.destroy_all
 
 ```
-
 
