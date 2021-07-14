@@ -224,3 +224,54 @@ irb(main):003:0> Author.first
 
 ```
 
+## Creating model Post
+
+```bash
+
+rails generate model Post content:string publish_at:datetime author:references
+rails generate migration AddTitleToPost title:string
+rails db:migrate
+
+```
+
+Added validations on model Post
+
+```
+❯ cat app/models/post.rb
+```
+
+```ruby
+class Post < ApplicationRecord
+  belongs_to :author
+  validates :title, presence: true, length: { minimum: 3, maximum: 200 }
+  validates :content, allow_nil: true
+  validates :publish_at, allow_nil: true
+end
+
+```
+
+Added **has_many :posts** on model Author
+
+```
+❯ cat app/models/author.rb
+```
+
+```ruby
+class Author < ApplicationRecord
+  validates :first_name, presence: true, length: { minimum: 2, maximum: 100 }
+  validates :description, allow_nil: true, length: { maximum: 500 }
+
+  after_validation :titleize_last_name, if: Proc.new { |a| a.last_name.present? }, on: :create
+
+  has_many :addresses, dependent: :destroy
+  has_many :posts
+
+  private
+
+  # transforms to the first letters in capital
+  def titleize_last_name
+    self.last_name = last_name.titleize
+  end
+end
+
+```
