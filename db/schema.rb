@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_224852) do
+ActiveRecord::Schema.define(version: 2021_07_14_083707) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "country"
@@ -34,5 +34,16 @@ ActiveRecord::Schema.define(version: 2021_07_13_224852) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "content"
+    t.datetime "publish_at"
+    t.integer "author_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "title"
+    t.index ["author_id"], name: "index_posts_on_author_id"
+  end
+
   add_foreign_key "addresses", "authors"
+  add_foreign_key "posts", "authors"
 end
