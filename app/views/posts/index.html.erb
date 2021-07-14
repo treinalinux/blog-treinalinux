@@ -1,10 +1,22 @@
 <h1>Posts</h1>
 
 <% if @posts.size > 0 %>
-  <% @posts.each do |post| %>
-    <%= post.title %>
-    </br>
-  <% end  %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= time_ago_in_words(post.created_at) %></td>
+        </tr>
+      <% end  %>
+    </tbody>
+  </table>
 <% else %>
     <p>No post registered</p>
 <% end %>
