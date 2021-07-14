@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+puts 'Cadastrando a base de dados inicial...'
+Author.create(first_name: 'Linus', last_name: 'Torvalds')
+Author.create(first_name: 'Steve', last_name: 'Jobs')
