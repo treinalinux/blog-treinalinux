@@ -134,3 +134,44 @@ irb(main):029:0> Author.destroy_all
 
 ```
 
+## Associations in the model
+
+```ruby
+
+❯ rails console 
+
+rails generate migration AddAuthorReferenceToAddress author:references 
+
+❯ rails db:migrate 
+
+❯ rails console  
+
+irb(main):007:0> Author.all
+
+irb(main):008:0> address.author
+
+irb(main):002:0> author = Author.create(first_name: 'Linus', last_name: 'Torvalds')
+
+irb(main):002:0> author = Author.create(first_name: 'Linus', last_name: 'Torvalds')
+
+irb(main):003:0> address = Address.create(street: 'Rua 123', author: author)
+
+irb(main):003:0> address = Address.create(street: 'Rua 123', author: author)
+
+irb(main):007:0> author.address
+
+irb(main):007:0> address.author
+
+
+# after has_many
+
+reload!
+
+irb(main):007:0> author = Author.create(first_name: 'Linus', last_name: 'Torvalds')
+
+irb(main):005:0> address = Address.create(street: 'Rua 123', author: author)
+
+irb(main):006:0> author.addresses
+
+```
+
