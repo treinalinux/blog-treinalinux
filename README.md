@@ -344,3 +344,110 @@ Post.create(title: 'My first Kernel', author: author)
 Post.create(title: 'My first Git', author: author)
 
 ```
+
+## Creating and using helpers
+
+Example of helpers
+
+```ruby
+❯ rails c      
+
+irb(main):001:0> helper.number_to_human(1000000000000)
+=> "1 Trillion"
+
+```
+
+**Creating helpers**
+
+```ruby
+
+❯ vim app/helpers/authors_helper.rb
+
+
+module AuthorsHelper
+  def number_of_posts(author)
+    if author.posts.count > 0
+      author.posts.count
+    else
+      'None'
+    end
+  end
+end
+
+```
+
+**Using helper time_ago_in_words**
+
+```ruby
+
+❯ cat app/views/posts/index.html.erb
+
+<h1>Posts</h1>
+
+<% if @posts.size > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= time_ago_in_words(post.created_at) %></td>
+        </tr>
+      <% end  %>
+    </tbody>
+  </table>
+<% else %>
+    <p>No post registered</p>
+<% end %>
+
+```
+
+```ruby
+
+❯ cat app/views/authors/index.html.erb
+
+
+<p id="notice"><%= notice %></p>
+
+<h1>Authors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Description</th>
+      <th>Posts</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @authors.each do |author| %>
+      <tr>
+        <td><%= author.first_name %></td>
+        <td><%= author.last_name %></td>
+        <td><%= author.description %></td>
+        <td><%= number_of_posts(author) %></td>
+        <td><%= link_to 'Show', author %></td>
+        <td><%= link_to 'Edit', edit_author_path(author) %></td>
+        <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Author', new_author_path %>
+
+```
+
+
+
+
