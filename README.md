@@ -275,3 +275,72 @@ class Author < ApplicationRecord
 end
 
 ```
+
+## Creating views with rails generate controller Posts
+
+```ruby
+❯ vim app/models/post.rb                                
+
+
+class Post < ApplicationRecord
+  belongs_to :author
+  validates :title, presence: true, length: { minimum: 3, maximum: 200 }
+end
+```
+
+```
+❯ rails generate controller Posts
+```
+
+
+```ruby
+❯ vim app/controllers/posts_controller.rb 
+
+
+class PostsController < ApplicationController
+  def index
+    @posts = Post.all
+  end
+end
+```
+
+```ruby
+❯ vim config/routes.rb  
+
+
+Rails.application.routes.draw do
+  resources :authors
+  get 'site', to: 'site#index'
+  root to: 'site#index'
+  get '/posts', to: 'posts#index'
+end
+
+```
+
+```ruby
+❯ vim app/views/posts/index.html.erb
+
+
+<h1>Posts</h1>
+
+<% if @posts.size > 0 %>
+  <% @posts.each do |post| %>
+    <%= post.title %>
+    </br>
+  <% end  %>
+<% else %>
+    <p>No post registered</p>
+<% end %>
+
+```
+
+```ruby
+❯ rails console 
+
+author = Author.first
+
+Post.create(title: 'My first Kernel', author: author)
+
+Post.create(title: 'My first Git', author: author)
+
+```
