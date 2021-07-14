@@ -380,7 +380,7 @@ end
 
 ```ruby
 
-❯ cat app/views/posts/index.html.erb
+❯ vim app/views/posts/index.html.erb
 
 <h1>Posts</h1>
 
@@ -409,7 +409,7 @@ end
 
 ```ruby
 
-❯ cat app/views/authors/index.html.erb
+❯ vim app/views/authors/index.html.erb
 
 
 <p id="notice"><%= notice %></p>
@@ -447,7 +447,5 @@ end
 <%= link_to 'New Author', new_author_path %>
 
 ```
-
-
 
 
