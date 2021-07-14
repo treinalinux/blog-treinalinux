@@ -1,0 +1,10 @@
+<h1>Posts</h1>
+
+<% if @posts.size > 0 %>
+  <% @posts.each do |post| %>
+    <%= post.title %>
+    </br>
+  <% end  %>
+<% else %>
+    <p>No post registered</p>
+<% end %>
