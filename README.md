@@ -175,3 +175,52 @@ irb(main):006:0> author.addresses
 
 ```
 
+## Automating tasks with seed
+
+```
+❯ vim db/seeds.rb
+```
+
+```ruby
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+#
+# Examples:
+#
+#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   Character.create(name: 'Luke', movie: movies.first)
+
+puts 'Cadastrando a base de dados inicial...'
+Author.create(first_name: 'Linus', last_name: 'Torvalds')
+Author.create(first_name: 'Steve', last_name: 'Jobs')
+
+```
+
+```
+❯ rails console 
+```
+
+```ruby
+
+irb(main):001:0> Address.create(street: 'Rua do Linus')
+irb(main):002:0> Author.first.update(first_name: 'Tio')
+
+```
+
+```
+
+# db:reset or db:seed:replant
+❯ rails db:reset
+❯ rails db:seed:replant
+
+❯ rails console
+
+```
+
+```ruby
+
+irb(main):002:0> Address.all
+irb(main):003:0> Author.first
+
+```
+
