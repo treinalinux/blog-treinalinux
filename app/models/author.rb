@@ -4,6 +4,8 @@ class Author < ApplicationRecord
 
   after_validation :titleize_last_name, if: Proc.new { |a| a.last_name.present? }, on: :create
 
+  has_many :addresses, dependent: :destroy
+
   private
 
   # transforms to the first letters in capital
