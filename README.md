@@ -774,3 +774,101 @@ irb(main):001:0> Post.update_all(publish_at: Time.now - 1.day)
 irb(main):002:0> NewPostsNotificationJob.perform_later([{email: 'joao@gmail.com', name: 'Joao'}, {email: 'lucas@gmail.com', name: 'Lucas'}])
 
 ```
+
+## Working jobs using sidekiq
+
+Link for crontab check online:
+
+- [crontab guru](https://crontab.guru)
+
+
+```bash
+
+❯ brew install redis
+
+## Add gems:
+    gem 'redis', '~> 4.0'
+    gem 'sidekiq'
+    gem 'sidekiq-cron', '~> 1.1'
+
+```
+
+```ruby
+
+❯ vim config/application.rb 
+
+...
+    9 module BlogTreinalinux                                                                                                  
+-- 10   class Application < Rails::Application                                                                                
++  11   ┆ config.active_job.queue_adapter = :sidekiq 
+
+...
+
+```
+
+
+```ruby
+
+❯ vim config/initializers/sidekiq.rb              
+
+jobs = {
+  'new_post_notification_job' => {
+    'cron' => '* * * * *',
+    'class' => 'NewPostsNotificationJob',
+    'queue' => 'notification',
+    'active_job' => true
+  }
+}
+
+Sidekiq::Cron::Job.load_from_hash(jobs)
+
+```
+
+
+```ruby
+
+❯ vim app/jobs/new_posts_notification_job.rb
+
+class NewPostsNotificationJob < ApplicationJob
+  queue_as :notification
+
+  def perform
+    subscribers = [{ email: 'joao@gmail.com', name: 'Joao' }, { email: 'lucas@gmail.com', name: 'Lucas' }]
+    posts = Post.where(publish_at: (Time.now - 1.week)..).select(:title)
+    subscribers.each do |subscriber|
+      SubscribersMailer.with(subscriber: subscriber, posts: posts)
+                       .new_posts.deliver_now
+    end
+  end
+end
+```
+
+
+
+```bash
+
+❯ redis-server --daemonize yes
+
+❯ bundle exec sidekiq -q default -q mailers -q notification
+
+
+               m,
+               `$b
+          .ss,  $$:         .,d$
+          `$$P,d$P'    .,md$P"'
+           ,$$$$$b/md$$$P^'
+         .d$$$$$$/$$$P'
+         $$^' `"/$$$'       ____  _     _      _    _
+         $:     ,$$:       / ___|(_) __| | ___| | _(_) __ _
+         `b     :$$        \___ \| |/ _` |/ _ \ |/ / |/ _` |
+                $$:         ___) | | (_| |  __/   <| | (_| |
+                $$         |____/|_|\__,_|\___|_|\_\_|\__, |
+              .d$$                                       |_|
+      
+
+
+❯ rails s
+
+```
+
+
