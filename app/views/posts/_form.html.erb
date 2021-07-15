@@ -10,7 +10,7 @@
 
   <%= post_form.label :author_id, 'Author' %>
   <%= post_form.select :author_id,
-    Author.all.map { |a| [a.first_name.to_s + ' ' + a.last_name.to_s, a.id] },
+    Author.all.map { |a| [full_name(a), a.id] },
     selected: post.author_id %>
   <br></br>
   <%= post_form.submit %>
