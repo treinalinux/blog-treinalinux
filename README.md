@@ -665,4 +665,52 @@ vim config/environments/development.rb
 
 ```
 
+## Configure send mail on Mailer
 
+```ruby
+
+❯ vim app/mailers/post_mailer.rb  
+
+class PostMailer < ApplicationMailer
+  def new_post
+    @post = params[:post]
+    mail(to: 'notification@post.com', subject: 'New post was created')
+  end
+end
+
+```
+
+**html and text**
+
+```ruby
+
+## In html
+
+❯ vim app/views/post_mailer/new_post.html.erb 
+
+<h1> Nova publicação </h1>
+
+<p> Um novo post foi criado: </p>
+<p><%= @post.title  %></p>
+
+
+## In text
+
+❯ vim app/views/post_mailer/new_post.text.erb 
+Nova publicação
+
+Um novo post foi criado:
+<%= @post.title  %>
+
+```
+
+
+**Testing send mail**
+
+```ruby
+❯ rails c                         
+
+irb(main):001:0> post = Post.first
+
+irb(main):002:0> PostMailer.with(post: post).new_post.deliver_now
+```
