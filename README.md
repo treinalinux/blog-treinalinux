@@ -714,3 +714,63 @@ irb(main):001:0> post = Post.first
 
 irb(main):002:0> PostMailer.with(post: post).new_post.deliver_now
 ```
+
+## Working Jobs
+
+```bash
+❯ rails generate job NewPostsNotification --queue notification
+
+❯ vim  app/jobs/new_posts_notification_job.rb 
+
+```
+
+```ruby
+
+class NewPostsNotificationJob < ApplicationJob
+  queue_as :notification
+
+  def perform(subscribers)
+    posts = Post.where(publish_at: (Time.now - 1.week)..).select(:title)
+    subscribers.each do |subscriber|
+      SubscribersMailer.with(subscriber: subscriber, posts: posts)
+        .new_posts.deliver_now
+    end
+  end
+end
+
+```
+
+```bash
+
+❯ rails generate mailer SubscribersMailer new_posts
+
+❯ vim app/mailers/subscribers_mailer.rb
+
+```
+
+```ruby
+
+class SubscribersMailer < ApplicationMailer
+  def new_posts
+    @posts = params[:posts]
+    @subscriber = params[:subscriber]
+
+    mail to: @subscriber[:email]
+  end
+end
+
+```
+
+```
+❯ mailcatcher
+```
+
+```ruby
+
+❯ rails c
+
+irb(main):001:0> Post.update_all(publish_at: Time.now - 1.day)
+
+irb(main):002:0> NewPostsNotificationJob.perform_later([{email: 'joao@gmail.com', name: 'Joao'}, {email: 'lucas@gmail.com', name: 'Lucas'}])
+
+```
