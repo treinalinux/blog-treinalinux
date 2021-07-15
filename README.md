@@ -575,3 +575,32 @@ end
 ...
 
 ```
+
+## Helper full_name created and implemented
+
+```ruby
+
+❯ vim app/helpers/posts_helper.rb                  
+
+module PostsHelper
+  def full_name(target)
+    target.first_name.to_s + ' ' + target.last_name.to_s
+  end
+end
+
+
+```
+
+```ruby
+
+...
+  <%= post_form.label :author_id, 'Author' %>
+  <%= post_form.select :author_id,
+    Author.all.map { |a| [full_name(a), a.id] },
+    selected: post.author_id %>
+  <br></br>
+...
+
+```
+
+
