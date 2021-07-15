@@ -604,3 +604,65 @@ end
 ```
 
 
+## Working mailcatcher
+
+```bash
+
+# Install default 
+❯ gem install mailcatcher
+
+# If error use install with example
+❯ gem install mailcatcher -- --with-cflags="-Wno-error=implicit-function-declaration"
+
+
+# Start mailcatcher
+❯ mailcatcher                                                                        
+Starting MailCatcher
+
+==> smtp://127.0.0.1:1025
+==> http://127.0.0.1:1080/
+*** MailCatcher runs as a daemon by default. Go to the web interface to quit.
+
+```
+
+**Help mailcatcher**
+
+```bash
+❯ mailcatcher --help
+Usage: mailcatcher [options]
+        --ip IP                      Set the ip address of both servers
+        --smtp-ip IP                 Set the ip address of the smtp server
+        --smtp-port PORT             Set the port of the smtp server
+        --http-ip IP                 Set the ip address of the http server
+        --http-port PORT             Set the port address of the http server
+        --http-path PATH             Add a prefix to all HTTP paths
+        --no-quit                    Don't allow quitting the process
+        --[no-]growl
+    -f, --foreground                 Run in the foreground
+    -b, --browse                     Open web browser
+    -v, --verbose                    Be more verbose
+    -h, --help                       Display this help information
+
+```
+
+**Configure mailcatcher on environments development**
+
+```ruby
+
+vim config/environments/development.rb
+
+...
+
+   36   # Don't care if the mailer can't send.                                                    
+   37   config.action_mailer.raise_delivery_errors = false                                        
+   38                                                                                             
++  39   # config mailcatcher added                                                                
++  40   config.action_mailer.delivery_method = :smtp                                              
++  41                                                                                             
++  42   config.action_mailer.smtp_settings = { address: '127.0.0.1', port: 1025 }
+
+...
+
+```
+
+
