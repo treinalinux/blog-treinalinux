@@ -1,1 +1,17 @@
-Teste
+<%= form_with(model: post) do |post_form| %>
+  <%= post_form.label :title %>
+  <%= post_form.text_field :title %>
+
+  <%= post_form.label :content %>
+  <%= post_form.text_area :content, size: '60x10' %>
+
+  <%= post_form.label :publish_at %>
+  <%= post_form.datetime_local_field :publish_at %>
+
+  <%= post_form.label :author_id, 'Author' %>
+  <%= post_form.select :author_id,
+    Author.all.map { |a| [a.first_name.to_s + ' ' + a.last_name.to_s, a.id] },
+    selected: post.author_id %>
+  <br></br>
+  <%= post_form.submit %>
+<% end %>
