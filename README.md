@@ -4,6 +4,15 @@ Estou criando o projeto **Blog Treina Linux** com Ruby On Rails, isso é inicial
 
 Pode se tornar um projeto oficial no futuro, no momento apenas realizando uma documentação de um projeto básico em Ruby on Rails.
 
+### Gems used on project:
+ 
+- [sidekiq](https://sidekiq.org)
+- [crontab](https://crontab.guru)
+- [redis](https://redis.io)
+- [mailcatcher](https://mailcatcher.me)
+
+
+
 ## Creating the project
 
 ```
