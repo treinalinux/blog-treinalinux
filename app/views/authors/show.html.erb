@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<% if @author.avatar.attached? %>
+  <p>
+    <%= image_tag(@author.avatar, height: '200') %>
+  </p>
+<% end %>
+
 <p>
   <strong>First name:</strong>
   <%= @author.first_name %>

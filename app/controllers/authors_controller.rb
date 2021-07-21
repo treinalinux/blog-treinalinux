@@ -57,13 +57,14 @@ class AuthorsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_author
-      @author = Author.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def author_params
-      params.require(:author).permit(:first_name, :last_name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_author
+    @author = Author.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def author_params
+    params.require(:author).permit(:first_name, :last_name, :description, :avatar)
+  end
 end
